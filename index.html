@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Kata Cinta | Untuk Teman Spesial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', 'Quicksand', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #fce8f2 0%, #ffe6f0 40%, #ffd9e8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.5rem;
+            position: relative;
+        }
+
+        /* background floating hearts */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart-float {
+            position: absolute;
+            font-size: 1.2rem;
+            opacity: 0.3;
+            animation: floatHeart 12s infinite ease-in-out;
+            color: #f77faa;
+            user-select: none;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.4;
+            }
+            85% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-20vh) rotate(15deg);
+                opacity: 0;
+            }
+        }
+
+        /* main card container */
+        .love-card {
+            position: relative;
+            z-index: 10;
+            max-width: 680px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 56px;
+            box-shadow: 0 25px 45px rgba(241, 113, 149, 0.25), 0 8px 18px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 220, 235, 0.8);
+        }
+
+        .card-inner {
+            padding: 2rem 2rem 2.2rem;
+        }
+
+        /* header section */
+        .greeting {
+            text-align: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .greeting h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #D43F62, #F65B8A, #FF9FBB);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            display: inline-block;
+            padding: 0 0.2rem;
+        }
+
+        .sub {
+            color: #c15174;
+            font-weight: 500;
+            font-size: 1rem;
+            background: #fff0f5;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            margin-top: 0.75rem;
+            backdrop-filter: blur(2px);
+        }
+
+        .sub span {
+            font-weight: 700;
+            color: #b23c5f;
+        }
+
+        /* sentence of the day */
+        .love-message {
+            background: rgba(255, 245, 250, 0.9);
+            border-radius: 48px;
+            padding: 1.6rem 2rem;
+            margin: 1.2rem 0 1.8rem 0;
+            text-align: center;
+            border-left: 5px solid #ff90b5;
+            border-right: 5px solid #ff90b5;
+            box-shadow: 0 6px 14px rgba(236, 112, 145, 0.1);
+        }
+
+        .love-text {
+            font-size: 1.5rem;
+            line-height: 1.4;
+            color: #3b2a2f;
+            font-weight: 500;
+            font-family: 'Segoe UI', 'Poppins', cursive;
+        }
+
+        .love-text i {
+            font-size: 1.8rem;
+            color: #f55b88;
+            margin: 0 6px;
+        }
+
+        /* love quotes list */
+        .quotes-container {
+            margin: 2rem 0 1.8rem;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #b9496e;
+            border-left: 4px solid #ff87ad;
+            padding-left: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .quote-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .quote-item {
+            background: #fffafc;
+            padding: 0.9rem 1.3rem;
+            border-radius: 32px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            border: 1px solid #ffe2ed;
+        }
+
+        .quote-item:hover {
+            transform: scale(1.01);
+            box-shadow: 0 8px 20px rgba(243, 118, 154, 0.12);
+            border-color: #ffbfd1;
+            background: white;
+        }
+
+        .quote-icon {
+            font-size: 2rem;
+            color: #f26d97;
+        }
+
+        .quote-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #4a2c36;
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        /* special note "walaupun kita teman" */
+        .special-note {
+            background: linear-gradient(120deg, #ffeef4, #fff3f8);
+            padding: 1rem 1.2rem;
+            border-radius: 44px;
+            margin: 1.2rem 0 1rem;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #b34368;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            border: 1px dashed #ffb7ce;
+        }
+
+        .special-note span {
+            font-size: 1.2rem;
+        }
+
+        /* cta / random quote button */
+        .random-quote-area {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .btn-love {
+            background: #ff8aae;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.7rem 2rem;
+            border-radius: 60px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.2s;
+            box-shadow: 0 5px 12px rgba(255, 100, 140, 0.3);
+            font-family: inherit;
+        }
+
+        .btn-love:hover {
+            background: #f56c97;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(235, 88, 128, 0.4);
+        }
+
+        .random-result {
+            margin-top: 0.8rem;
+            text-align: center;
+            background: #ffeef4;
+            border-radius: 50px;
+            padding: 0.9rem;
+            font-weight: 500;
+            color: #b23c5f;
+            font-size: 0.95rem;
+            border-left: 4px solid #ff8aae;
+            transition: all 0.2s;
+        }
+
+        /* developer credit */
+        .dev-footer {
+            margin-top: 2.2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid #ffdae6;
+            color: #be7c94;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .dev-footer strong {
+            color: #d14f77;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .heart-icon-small {
+            color: #f66b96;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 550px) {
+            .card-inner {
+                padding: 1.5rem;
+            }
+            .love-text {
+                font-size: 1.2rem;
+            }
+            .quote-text {
+                font-size: 0.9rem;
+            }
+            .greeting h1 {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* tambahan sedikit animasi fade */
+        .fade-transition {
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+
+<div class="floating-hearts" id="floatingHearts"></div>
+
+<div class="love-card">
+    <div class="card-inner">
+        <div class="greeting">
+            <h1>✨ Untukmu, Teman Spesial ✨</h1>
+            <div class="sub">
+                <span>🧡 “Walau kita berteman, aku suka kepada mu” 🧡</span>
+            </div>
+        </div>
+
+        <div class="love-message">
+            <div class="love-text">
+                <i>🌸</i> Jujur dari hati, <br> 
+                senyummu buat hariku lebih cerah <i>🌼</i>
+            </div>
+        </div>
+
+        <div class="quotes-container">
+            <div class="section-title">
+                💌 Kata hati yang tak terucap
+            </div>
+            <div class="quote-list" id="quoteList">
+                <!-- isi oleh js nanti, tapi juga fallback via html -->
+            </div>
+        </div>
+
+        <div class="special-note">
+            <span>🤝🏻</span> "Teman boleh, tapi hatiku selalu berdegup untukmu"
+            <span>💓</span>
+        </div>
+
+        <div class="random-quote-area">
+            <button class="btn-love" id="randomQuoteBtn">
+                🌟 Ambil kata cinta random 🌟
+            </button>
+        </div>
+        <div id="randomQuoteResult" class="random-result">
+            ❤️ Klik tombol untuk kejutan manis ❤️
+        </div>
+
+        <div class="dev-footer">
+            <span class="heart-icon-small">💻</span> Developer :
+            <strong>THOHIR</strong>
+            <span class="heart-icon-small">❤️‍🔥</span>
+            <span>| dibuat dengan sepenuh hati untuk kamu</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Kumpulan kata-kata cinta yang manis, dengan tema "teman tapi suka"
+    const loveQuotes = [
+        "Aku suka sama kamu, bukan karena siapa dirimu, tapi karena caramu membuat hatiku nyaman walau kita berteman.",
+        "Pernahkah kamu merasa? Saat kita bercanda, aku berpura-pura biasa, padahal hati ini berteriak suka padamu.",
+        "Menjadi temanmu adalah anugerah, tapi memendam rasa ini adalah pilihan hati yang tak bisa kupungkiri.",
+        "Setiap pesan darimu, selalu kutunggu. Maaf kalau terkadang aku berlebihan, karena aku suka kamu.",
+        "Kamu tahu? Di sela obrolan santai kita, terselip rasa yang ingin kusampaikan: aku suka kamu, walau kita temanan.",
+        "Tersenyumlah, karena senyummu adalah alasan mengapa hatiku memilih kamu di antara semua.",
+        "Aku tidak ingin merusak persahabatan kita, tapi kupikir kamu berhak tahu: hatiku berdebar tiap dekat kamu.",
+        "Bintang malam pun tahu, aku suka diam-diam padamu. Semoga suatu hari kamu membaca hatiku.",
+        "Setiap hari jadi hari yang indah karena bisa berteman denganmu, tapi jujur, aku ingin lebih dari sekadar teman.",
+        "Kalau cinta adalah sebuah pertemuan, biarkan aku jadi orang yang selalu ada meski hanya sebagai teman yang sayang.",
+        "Aku gugup setiap kali dekat kamu, padahal cuma ingin bilang: 'aku suka kamu' sejak lama.",
+        "Senyum manismu selalu membuat hariku penuh warna. Aku suka sama kamu, dan aku pasrah dengan rasa ini."
+    ];
+
+    // array tambahan beberapa fresh quotes yang lebih romantis 
+    const extendedQuotes = [
+        "Hanya bisa bilang suka lewat doa, semoga kita ditemukan di waktu yang tepat.",
+        "Jangan heran jika aku selalu perhatian, karena hatiku memilih kamu meski status teman.",
+        "Apakah boleh aku sedikit berharap? Bahwa perasaan ini suatu saat sampai juga ke hatimu?",
+        "Pernahkah kamu merasakan hal yang sama? Saat aku bilang 'gapapa jadi teman', padahal dalam hati aku ingin lebih.",
+        "Kehadiranmu adalah keajaiban kecil, dan aku jatuh cinta pada keajaiban itu setiap hari."
+    ];
+
+    // combine all quotes
+    const allQuotes = [...loveQuotes, ...extendedQuotes];
+
+    // Fungsi untuk menampilkan daftar kata (3 - 6 item dinamis tapi menampilkan sebagian random yang menarik)
+    // biar setiap refresh ada variasi, tapi tetep konsisten dengan vibe. Ambil 4 quotes secara acak untuk list awal.
+    function getRandomSubsetQuotes(arr, count = 4) {
+        const shuffled = [...arr];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, count);
+    }
+
+    // render quote list ke dalam container
+    function renderQuoteList(quotesArray) {
+        const quoteListContainer = document.getElementById('quoteList');
+        if (!quoteListContainer) return;
+        quoteListContainer.innerHTML = '';
+        quotesArray.forEach(quote => {
+            const quoteDiv = document.createElement('div');
+            quoteDiv.className = 'quote-item';
+            quoteDiv.innerHTML = `
+                <div class="quote-icon">💞</div>
+                <div class="quote-text">“${quote}”</div>
+                <div class="quote-icon" style="font-size:1.2rem;">✨</div>
+            `;
+            quoteListContainer.appendChild(quoteDiv);
+        });
+    }
+
+    // random quote buat tombol
+    function getRandomQuote() {
+        const randomIndex = Math.floor(Math.random() * allQuotes.length);
+        return allQuotes[randomIndex];
+    }
+
+    // update random quote result
+    function updateRandomQuoteDisplay() {
+        const quote = getRandomQuote();
+        const resultDiv = document.getElementById('randomQuoteResult');
+        if (resultDiv) {
+            resultDiv.innerHTML = `💗 ${quote} 💗`;
+            // tambah efek kecil
+            resultDiv.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                if(resultDiv) resultDiv.style.transform = 'scale(1)';
+            }, 200);
+        }
+    }
+
+    // generate floating hearts di background secara dinamis
+    function generateFloatingHearts() {
+        const container = document.getElementById('floatingHearts');
+        if (!container) return;
+        const heartCount = 28;
+        for (let i = 0; i < heartCount; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-float');
+            heart.innerHTML = ['❤️', '💖', '💗', '💓', '💘', '💝', '🌸', '🌷'][Math.floor(Math.random() * 8)];
+            heart.style.left = Math.random() * 100 + '%';
+            const size = Math.random() * 1.2 + 0.8;
+            heart.style.fontSize = size + 'rem';
+            heart.style.animationDuration = Math.random() * 8 + 7 + 's';
+            heart.style.animationDelay = Math.random() * 15 + 's';
+            heart.style.opacity = Math.random() * 0.3 + 0.15;
+            container.appendChild(heart);
+        }
+    }
+
+    // fungsi tambahan: menampung kata mutiara khusus "teman tapi suka" di section special note udah fixed, 
+    // gaperlu diubah, namun kita juga bisa membuat pesan dinamis di love-message bergantian? 
+    // Oke biar makin asik, setiap kali tombol random, kita juga bisa mengubah sedikit love message? 
+    // tetapi biar tetap simpel tapi menarik, kita buat optional: ganti bagian love-message? tidak perlu, biarkan kata2 utama iconik.
+    // Namun agar lebih personal, kita bisa menambahkan refresh / rotate quote random untuk teks tengah? 
+    // Saya akan tambahin fitur ekstra: klik pada love message bisa mengganti kutipan utama (fun surprise)
+    const centralMessageDiv = document.querySelector('.love-text');
+    const originalCentralMessage = centralMessageDiv ? centralMessageDiv.innerHTML : '';
+    
+    // kumpulan central messages yg fresh dengan nuansa teman tapi suka
+    const centralMessages = [
+        '<i>🌸</i> Jujur dari hati, <br> senyummu buat hariku lebih cerah <i>🌼</i>',
+        '<i>💖</i> Saat kita berbagi tawa, diam-diam aku berharap itu selamanya <i>✨</i>',
+        '<i>💫</i> Aku suka sama kamu, walaupun hanya bisa memelukmu dalam doa <i>🕊️</i>',
+        '<i>🌹</i> Teman boleh, tapi aku tak bisa menahan hati untuk tidak suka padamu <i>🍃</i>',
+        '<i>💗</i> Jangan marah ya... rasanya setiap hari pengen dengar ceritamu, karena aku suka kamu <i>🍀</i>',
+        '<i>⭐</i> Setiap "hai" darimu berasa pelukan hangat. Aku suka kamu, teman istimewa <i>💞</i>',
+    ];
+    
+    let centralIndex = 0;
+    function changeCentralMessage() {
+        if (!centralMessageDiv) return;
+        centralIndex = (centralIndex + 1) % centralMessages.length;
+        centralMessageDiv.innerHTML = centralMessages[centralIndex];
+        // sedikit animasi
+        centralMessageDiv.style.opacity = '0';
+        setTimeout(() => {
+            if(centralMessageDiv) centralMessageDiv.style.opacity = '1';
+        }, 100);
+    }
+    
+    // setup tombol untuk love message senter :
+    // biar user bisa klik area love-message untuk mengganti kata manis
+    const loveMessageBox = document.querySelector('.love-message');
+    if (loveMessageBox) {
+        loveMessageBox.style.cursor = 'pointer';
+        loveMessageBox.addEventListener('click', (e) => {
+            e.stopPropagation();
+            changeCentralMessage();
+        });
+        loveMessageBox.setAttribute('title', 'Klik untuk kata cinta lainnya 💕');
+    }
+    
+    // Inisiasi daftar quotes random di list (tetap menampilkan kata2 dari kumpulan, tapi biar lebih variatif, kita tampilkan 4 quotes berbeda setiap load)
+    // dan pastikan selalu ada nuansa 'teman tapi suka'
+    // namun untuk menunjukkan identitas developer, kita juga tampilkan footer dengan jelas THOHIR
+    
+    // jalankan setup
+    function init() {
+        // memilih 4 quotes unik random
+        const initialQuotes = getRandomSubsetQuotes(allQuotes, 4);
+        renderQuoteList(initialQuotes);
+        
+        // generate floating hearts
+        generateFloatingHearts();
+        
+        // setup tombol random quote
+        const randomBtn = document.getElementById('randomQuoteBtn');
+        if (randomBtn) {
+            randomBtn.addEventListener('click', () => {
+                updateRandomQuoteDisplay();
+            });
+        }
+        
+        // set random quote first time sedikit welcome
+        const welcomeQuote = getRandomQuote();
+        const resultDiv = document.getElementById('randomQuoteResult');
+        if (resultDiv) {
+            resultDiv.innerHTML = `💕 ${welcomeQuote} 💕`;
+        }
+        
+        // tambahan: efek hover pada card
+        // semua siap
+        
+        // menampilkan tahun / ucapan kecil di dev-footer bukan perlu, sudah ada
+        // OKE! 
+        // ada juga fitur unik: kalo klik quotes bisa muncul alert? tidak perlu biarkan simpel.
+        // Tambah event biar lebih hidup: double click special note untuk muncul pesan manis
+        const specialNoteDiv = document.querySelector('.special-note');
+        if(specialNoteDiv) {
+            specialNoteDiv.addEventListener('dblclick', () => {
+                const secretQuotes = [
+                    "💌 Aku suka kamu diam-diam, tapi kali ini aku katakan jujur lewat website ini. 😊",
+                    "💖 Jadilah temanku yang selalu bahagia, biar aku terus bisa menyayangimu dari dekat.",
+                    "🌸 Jujur tiap kali kamu kirim pesan, jantungku berdegup kencang. Aku suka kamu!"
+                ];
+                const randomSecret = secretQuotes[Math.floor(Math.random() * secretQuotes.length)];
+                const resultDiv = document.getElementById('randomQuoteResult');
+                if(resultDiv) {
+                    resultDiv.innerHTML = `✨ RAHASIA KECIL ✨ <br> ${randomSecret}`;
+                    resultDiv.style.background = "#fff0fa";
+                    setTimeout(() => {
+                        if(resultDiv && resultDiv.innerHTML.includes("RAHASIA KECIL")) {
+                            // setelah 4 detik kembali ke random quote biasa? tidak, biarkan saja sampai 
